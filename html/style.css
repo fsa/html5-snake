@@ -21,8 +21,8 @@ body {
     --color-field2: lightblue;
     --color-head: red;
     --color-body: green;
-    --width: 60;
-    --height: 30;
-    --block-size: 20;
+    --width: 40;
+    --height: 20;
+    --block-size: 64;
     --header-size: 80;
 }

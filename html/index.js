@@ -30,9 +30,20 @@ field[y][x] = 'h';
 field[y-1][x] = 'b';
 field[y-2][x] = 'b';
 let dir='d';
+let cur_dir=dir;
 drawGame();
 
 let fruit_timer=0;
+
+const fruits = [];
+fruits[0] = new Image();
+fruits[0].src = 'img/pear.png';
+fruits[1] = new Image();
+fruits[1].src = 'img/cherry.png';
+fruits[2] = new Image();
+fruits[2].src = 'img/apple.png';
+fruits[3] = new Image();
+fruits[3].src = 'img/banana.png';
 
 let interval = setInterval(()=>{
     if(fruit_timer++>5) {
@@ -41,7 +52,7 @@ let interval = setInterval(()=>{
         let fruit_y = Math.floor(Math.random() * game.height);
         if(!field[fruit_y][fruit_x]) {
             field[fruit_y][fruit_x]='a';
-            fillBlock(fruit_x, fruit_y, 'olive');
+            drawBlock(fruit_x, fruit_y, fruits[Number(Math.floor(Math.random()*4))]);
         }
     }
     moveHead(dir);
@@ -52,22 +63,22 @@ addEventListener('keydown', movePlayer);
 function movePlayer(event) {
     switch (event.keyCode) {
         case 37:
-            if(dir!='r') {
+            if(cur_dir!='r') {
                 dir = 'l';
             }
             break;
         case 38:
-            if (dir != 'd') {
+            if (cur_dir != 'd') {
                 dir = 'u';
             }
             break;
         case 39:
-            if (dir != 'l') {
+            if (cur_dir != 'l') {
                 dir = 'r';
             }
             break;
         case 40:
-            if (dir != 'u') {
+            if (cur_dir != 'u') {
                 dir = 'd';
             }
 
@@ -130,6 +141,7 @@ function stopGame(message) {
 }
 
 function moveHead(dir) {
+    cur_dir=dir;
     switch(dir) {
         case 'l':
             x--;
@@ -163,6 +175,8 @@ function moveHead(dir) {
         let old=snake.shift();
         field[old[1]][old[0]]=null;
         showBlock(old[0], old[1]);
+    } else {
+        showScore();
     }
     field[snake[snake.length - 2][1]][snake[snake.length - 2][0]]='b';
     showBlock(snake[snake.length - 2][0], snake[snake.length - 2][1], 'b');
@@ -179,6 +193,7 @@ function drawGame() {
             showBlock(x, y, field[y][x]);
         }
     }
+    showScore();
 }
 
 function showBlock(x, y, element) {
@@ -197,4 +212,16 @@ function showBlock(x, y, element) {
 function fillBlock(x, y, color) {
     ctx.fillStyle = color;
     ctx.fillRect((x + 1) * game.blockSize, game.headerSize + y * game.blockSize, game.blockSize, game.blockSize);
+}
+
+function drawBlock(x, y, img) {
+    ctx.drawImage(img, (x + 1) * game.blockSize, game.headerSize + y * game.blockSize, game.blockSize, game.blockSize);
+}
+
+function showScore() {
+    ctx.fillStyle = game.colorFrame;
+    ctx.fillRect(0, 0, canvas.width, game.headerSize);
+    ctx.fillStyle = "#000";
+    ctx.font = "30pt Arial";
+    ctx.fillText('Длина ' + snake.length, game.blockSize, 60);
 }
