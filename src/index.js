@@ -1,4 +1,9 @@
 'use strict'
+import './style.css';
+import './img/apple.png';
+import "./img/banana.png";
+import "./img/cherry.png";
+import "./img/pear.png";
 
 const div = document.getElementById('game');
 const settings = getComputedStyle(div);
