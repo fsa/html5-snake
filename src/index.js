@@ -220,16 +220,19 @@ function moveHead(dir) {
             break;
         default:
             stopGame("Неверное направление движения");
+            return;
     }
     if (x < 0 || x >= game.width || y < 0 || y >= game.height) {
         stopGame(
             "Ударом о борт делаем аборт! :-) Ваш результат " + snake.length
         );
+        return;
     }
     let fruit = false;
     switch (field[y][x]) {
         case "b":
             stopGame("Вы укусили себя за хвост. Ваш результат " + snake.length);
+            return;
             break;
         case "a":
             fruit = true;
