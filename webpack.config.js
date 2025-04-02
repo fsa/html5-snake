@@ -4,7 +4,10 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
-    mode: "production",
+    entry: "./src/index.js",
+    output: {
+        publicPath: "/html5-snake",
+    },
     module: {
         rules: [
             {
@@ -23,7 +26,7 @@ module.exports = {
                 test: /\.(png|jpe?g|gif|ico)$/i,
                 loader: "file-loader",
                 options: {
-                    outputPath: 'img',
+                    outputPath: "img",
                     name: "[name].[ext]",
                 },
             },
